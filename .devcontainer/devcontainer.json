@@ -22,6 +22,6 @@
     }
   },
   "postCreateCommand": "pip install --upgrade pip && pip install -r requirements.txt",
-  "postStartCommand": "python app.py &",
+  "postStartCommand": "python app.py",
   "forwardPorts": [5000]
 }
