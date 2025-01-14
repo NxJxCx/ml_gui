@@ -1,0 +1,718 @@
+[
+    {
+        "label": "perf_counter",
+        "importPath": "time",
+        "description": "time",
+        "isExtraImport": true,
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Literal",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "ArrayLike",
+        "importPath": "numpy.typing",
+        "description": "numpy.typing",
+        "isExtraImport": true,
+        "detail": "numpy.typing",
+        "documentation": {}
+    },
+    {
+        "label": "NDArray",
+        "importPath": "numpy.typing",
+        "description": "numpy.typing",
+        "isExtraImport": true,
+        "detail": "numpy.typing",
+        "documentation": {}
+    },
+    {
+        "label": "NDArray",
+        "importPath": "numpy.typing",
+        "description": "numpy.typing",
+        "isExtraImport": true,
+        "detail": "numpy.typing",
+        "documentation": {}
+    },
+    {
+        "label": "matplotlib.pyplot",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "matplotlib.pyplot",
+        "description": "matplotlib.pyplot",
+        "detail": "matplotlib.pyplot",
+        "documentation": {}
+    },
+    {
+        "label": "ConfusionMatrixDisplay",
+        "importPath": "sklearn.metrics",
+        "description": "sklearn.metrics",
+        "isExtraImport": true,
+        "detail": "sklearn.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "accuracy_score",
+        "importPath": "sklearn.metrics",
+        "description": "sklearn.metrics",
+        "isExtraImport": true,
+        "detail": "sklearn.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "classification_report",
+        "importPath": "sklearn.metrics",
+        "description": "sklearn.metrics",
+        "isExtraImport": true,
+        "detail": "sklearn.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "confusion_matrix",
+        "importPath": "sklearn.metrics",
+        "description": "sklearn.metrics",
+        "isExtraImport": true,
+        "detail": "sklearn.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "mean_squared_error",
+        "importPath": "sklearn.metrics",
+        "description": "sklearn.metrics",
+        "isExtraImport": true,
+        "detail": "sklearn.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "r2_score",
+        "importPath": "sklearn.metrics",
+        "description": "sklearn.metrics",
+        "isExtraImport": true,
+        "detail": "sklearn.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "cross_val_score",
+        "importPath": "sklearn.model_selection",
+        "description": "sklearn.model_selection",
+        "isExtraImport": true,
+        "detail": "sklearn.model_selection",
+        "documentation": {}
+    },
+    {
+        "label": "learning_curve",
+        "importPath": "sklearn.model_selection",
+        "description": "sklearn.model_selection",
+        "isExtraImport": true,
+        "detail": "sklearn.model_selection",
+        "documentation": {}
+    },
+    {
+        "label": "train_test_split",
+        "importPath": "sklearn.model_selection",
+        "description": "sklearn.model_selection",
+        "isExtraImport": true,
+        "detail": "sklearn.model_selection",
+        "documentation": {}
+    },
+    {
+        "label": "DecisionTreeClassifier",
+        "importPath": "sklearn.tree",
+        "description": "sklearn.tree",
+        "isExtraImport": true,
+        "detail": "sklearn.tree",
+        "documentation": {}
+    },
+    {
+        "label": "DecisionTreeRegressor",
+        "importPath": "sklearn.tree",
+        "description": "sklearn.tree",
+        "isExtraImport": true,
+        "detail": "sklearn.tree",
+        "documentation": {}
+    },
+    {
+        "label": "plot_tree",
+        "importPath": "sklearn.tree",
+        "description": "sklearn.tree",
+        "isExtraImport": true,
+        "detail": "sklearn.tree",
+        "documentation": {}
+    },
+    {
+        "label": "base64",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "base64",
+        "description": "base64",
+        "detail": "base64",
+        "documentation": {}
+    },
+    {
+        "label": "secrets",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "secrets",
+        "description": "secrets",
+        "detail": "secrets",
+        "documentation": {}
+    },
+    {
+        "label": "BytesIO",
+        "importPath": "io",
+        "description": "io",
+        "isExtraImport": true,
+        "detail": "io",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "session",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "CORS",
+        "importPath": "flask_cors",
+        "description": "flask_cors",
+        "isExtraImport": true,
+        "detail": "flask_cors",
+        "documentation": {}
+    },
+    {
+        "label": "generate_session_id",
+        "importPath": "machine_learning.util",
+        "description": "machine_learning.util",
+        "isExtraImport": true,
+        "detail": "machine_learning.util",
+        "documentation": {}
+    },
+    {
+        "label": "get_all_algo_names",
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "isExtraImport": true,
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "get_ml_instance",
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "isExtraImport": true,
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "get_trained_history_results",
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "isExtraImport": true,
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "remove_ml_instance",
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "isExtraImport": true,
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "set_ml_instance",
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "isExtraImport": true,
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "set_session_id",
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "isExtraImport": true,
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "MLBase",
+        "kind": 6,
+        "importPath": "machine_learning.base",
+        "description": "machine_learning.base",
+        "peekOfCode": "class MLBase:\n    _algo_name = \"\"\n    _algorithm = \"\"\n    def __init__(\n        self,\n        dataset: Union[Dict[str, Any], pd.DataFrame],\n        column_features: Union[List[str], Tuple[str]],\n        column_target: Union[List[str], Tuple[str]],\n    ):\n        \"\"\"",
+        "detail": "machine_learning.base",
+        "documentation": {}
+    },
+    {
+        "label": "DecisionTreeClassification",
+        "kind": 6,
+        "importPath": "machine_learning.decision_tree",
+        "description": "machine_learning.decision_tree",
+        "peekOfCode": "class DecisionTreeClassification(MLBase):\n    \"\"\"\n    DecisionTreeClassification Class for Decision Tree Classifier\n    This module provides a `Classification` class that encapsulates the functionality\n    to train, evaluate, and visualize a Decision Tree Classifier using scikit-learn.\n    It includes methods for configuring the model, training it, evaluating its performance,\n    and plotting various visualizations related to the model and data.\n    Usage:\n    1. Create an instance of the `Classification` class with the dataset, feature columns, and target column.\n    2. Configure the training parameters using `configure_training()`.",
+        "detail": "machine_learning.decision_tree",
+        "documentation": {}
+    },
+    {
+        "label": "DecisionTreeRegression",
+        "kind": 6,
+        "importPath": "machine_learning.decision_tree",
+        "description": "machine_learning.decision_tree",
+        "peekOfCode": "class DecisionTreeRegression(MLBase):\n    \"\"\"\n    DecisionTreeRegression Class for Decision Tree Regressor\n    This module provides a `Regression` class that encapsulates the functionality\n    to train, evaluate, and visualize a Decision Tree Regressor using scikit-learn.\n    It includes methods for configuring the model, training it, evaluating its performance,\n    and plotting various visualizations related to the model and data.\n    Usage:\n    1. Create an instance of the `Regression` class with the dataset, feature columns, and target column.\n    2. Configure the training parameters using `configure_training()`.",
+        "detail": "machine_learning.decision_tree",
+        "documentation": {}
+    },
+    {
+        "label": "get_plots_by_instance",
+        "kind": 2,
+        "importPath": "machine_learning.decision_tree",
+        "description": "machine_learning.decision_tree",
+        "peekOfCode": "def get_plots_by_instance(ml):\n    if isinstance(ml, DecisionTreeClassification):\n        return {\n            \"learning_curve\": encode_base64(ml.plot_learning_curve()),\n            \"class_distribution\": encode_base64(ml.plot_class_distribution()),\n            \"confusion_matrix\": encode_base64(ml.plot_confusion_matrix()),\n            \"decision_tree\": encode_base64(ml.plot_decision_tree()),\n            \"feature_importance\": encode_base64(ml.plot_feature_importance()),\n        }\n    elif isinstance(ml, DecisionTreeRegression):",
+        "detail": "machine_learning.decision_tree",
+        "documentation": {}
+    },
+    {
+        "label": "get_all_algo_names",
+        "kind": 2,
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "peekOfCode": "def get_all_algo_names() -> Dict[str, Dict[str, str]]:\n    return {\n        \"Decision Tree\": {\n            DecisionTreeClassification._algorithm: DecisionTreeClassification._algo_name,\n            DecisionTreeRegression._algorithm: DecisionTreeRegression._algo_name,\n        },\n    }\ndef get_class_from_algo(algo: str) -> Optional[type[MLBase]]:\n    if algo == DecisionTreeClassification._algorithm:\n        return DecisionTreeClassification",
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "get_class_from_algo",
+        "kind": 2,
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "peekOfCode": "def get_class_from_algo(algo: str) -> Optional[type[MLBase]]:\n    if algo == DecisionTreeClassification._algorithm:\n        return DecisionTreeClassification\n    elif algo == DecisionTreeRegression._algorithm:\n        return DecisionTreeRegression\n    return None\ndef set_session_id(session_instance, session_id: str):\n    global ml_instances\n    if not session_id:\n        session_id = generate_session_id()",
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "set_session_id",
+        "kind": 2,
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "peekOfCode": "def set_session_id(session_instance, session_id: str):\n    global ml_instances\n    if not session_id:\n        session_id = generate_session_id()\n        session_instance[\"session_id\"] = session_id\n    if session_id not in ml_instances.keys():\n        ml_instances[session_id] = None\n    return session_id\ndef get_ml_instance(key: str):\n    global ml_instances",
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "get_ml_instance",
+        "kind": 2,
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "peekOfCode": "def get_ml_instance(key: str):\n    global ml_instances\n    if key not in ml_instances.keys():\n        return None\n    return ml_instances[key]\ndef remove_ml_instance(key: str):\n    global ml_instances\n    if key in ml_instances.keys():\n        ml_instances[key] = None\ndef clear_session_id(session_id: str):",
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "remove_ml_instance",
+        "kind": 2,
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "peekOfCode": "def remove_ml_instance(key: str):\n    global ml_instances\n    if key in ml_instances.keys():\n        ml_instances[key] = None\ndef clear_session_id(session_id: str):\n    global ml_instances\n    if session_id in ml_instances.keys():\n        del ml_instances[session_id]\ndef set_ml_instance(key: str, algo: str, *args, **kwargs):\n    global ml_instances",
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "clear_session_id",
+        "kind": 2,
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "peekOfCode": "def clear_session_id(session_id: str):\n    global ml_instances\n    if session_id in ml_instances.keys():\n        del ml_instances[session_id]\ndef set_ml_instance(key: str, algo: str, *args, **kwargs):\n    global ml_instances\n    if key in ml_instances.keys():\n        AlgorithmClass = get_class_from_algo(algo)\n        if AlgorithmClass:\n            ml_instances[key] = AlgorithmClass(*args, **kwargs)",
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "set_ml_instance",
+        "kind": 2,
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "peekOfCode": "def set_ml_instance(key: str, algo: str, *args, **kwargs):\n    global ml_instances\n    if key in ml_instances.keys():\n        AlgorithmClass = get_class_from_algo(algo)\n        if AlgorithmClass:\n            ml_instances[key] = AlgorithmClass(*args, **kwargs)\ndef get_plots(session_id: str) -> Dict[str, bytes]:\n    global ml_instances\n    if session_id in ml_instances.keys():\n        ml = ml_instances.get(session_id, None)",
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "get_plots",
+        "kind": 2,
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "peekOfCode": "def get_plots(session_id: str) -> Dict[str, bytes]:\n    global ml_instances\n    if session_id in ml_instances.keys():\n        ml = ml_instances.get(session_id, None)\n        if not ml:\n            return {}\n        if isinstance(ml, DecisionTreeClassification):\n            cd = encode_base64(ml.plot_class_distribution())\n            cm = encode_base64(ml.plot_confusion_matrix())\n            lc = encode_base64(ml.plot_learning_curve())",
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "get_algo_name",
+        "kind": 2,
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "peekOfCode": "def get_algo_name(session_id: str) -> Optional[str]:\n    global ml_instances\n    if session_id not in ml_instances.keys():\n        return None\n    return ml_instances[session_id].algorithm\ndef get_trained_history_results(session_id: str) -> Dict[str, Any]:\n    global ml_instances\n    if session_id not in ml_instances.keys():\n        return {}\n    ml = ml_instances.get(session_id, None)",
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "get_trained_history_results",
+        "kind": 2,
+        "importPath": "machine_learning.ml_util",
+        "description": "machine_learning.ml_util",
+        "peekOfCode": "def get_trained_history_results(session_id: str) -> Dict[str, Any]:\n    global ml_instances\n    if session_id not in ml_instances.keys():\n        return {}\n    ml = ml_instances.get(session_id, None)\n    if not ml:\n        return {}\n    evaluated = ml.evaluate_trained_model()\n    indices = {i: k for i, k in enumerate(evaluated.keys())}\n    evaluation = map_list_json_compatible([evaluated[indices[i]] for i in indices.keys()])",
+        "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "MatrixLike",
+        "kind": 5,
+        "importPath": "machine_learning.typing",
+        "description": "machine_learning.typing",
+        "peekOfCode": "MatrixLike = Union[List[List[float]], List[List[int]], NDArray]",
+        "detail": "machine_learning.typing",
+        "documentation": {}
+    },
+    {
+        "label": "encode_base64",
+        "kind": 2,
+        "importPath": "machine_learning.util",
+        "description": "machine_learning.util",
+        "peekOfCode": "def encode_base64(byte_data: bytes) -> str:\n    \"\"\"\n    Encode bytes to a Base64 string.\n    :param byte_data: The byte data to be encoded.\n    :return: A Base64 encoded string representation of the byte data.\n    \"\"\"\n    return base64.b64encode(byte_data).decode(\"utf-8\")\ndef decode_base64(encoded_data: str) -> bytes:\n    \"\"\"\n    Decode a Base64 string back to bytes.",
+        "detail": "machine_learning.util",
+        "documentation": {}
+    },
+    {
+        "label": "decode_base64",
+        "kind": 2,
+        "importPath": "machine_learning.util",
+        "description": "machine_learning.util",
+        "peekOfCode": "def decode_base64(encoded_data: str) -> bytes:\n    \"\"\"\n    Decode a Base64 string back to bytes.\n    :param encoded_data: The Base64 encoded string to be decoded.\n    :return: The decoded byte data.\n    \"\"\"\n    return base64.b64decode(encoded_data)\ndef get_image_data_from_plot(plot_func) -> bytes:\n    \"\"\"\n    Captures image data from a plot function.",
+        "detail": "machine_learning.util",
+        "documentation": {}
+    },
+    {
+        "label": "get_image_data_from_plot",
+        "kind": 2,
+        "importPath": "machine_learning.util",
+        "description": "machine_learning.util",
+        "peekOfCode": "def get_image_data_from_plot(plot_func) -> bytes:\n    \"\"\"\n    Captures image data from a plot function.\n    :param plot_func: A function that generates a plot (e.g., `plot_tree`, `disp.plot`, etc.)\n    :return: Image data as bytes (in PNG format).\n    \"\"\"\n    # Create a BytesIO object to save the plot as image data\n    img_stream = BytesIO()\n    # Generate the plot using the provided function\n    plot_func()",
+        "detail": "machine_learning.util",
+        "documentation": {}
+    },
+    {
+        "label": "generate_session_id",
+        "kind": 2,
+        "importPath": "machine_learning.util",
+        "description": "machine_learning.util",
+        "peekOfCode": "def generate_session_id():\n    return secrets.token_hex(12)\ndef recursive_json_compatible(elem: Any):\n    if isinstance(elem, np.ndarray):\n        return elem.tolist()\n    elif isinstance(elem, pd.DataFrame):\n        return elem.to_dict()\n    elif isinstance(elem, pd.Series):\n        if elem.index.equals(pd.Index(range(len(elem)))):\n            return elem.tolist()",
+        "detail": "machine_learning.util",
+        "documentation": {}
+    },
+    {
+        "label": "recursive_json_compatible",
+        "kind": 2,
+        "importPath": "machine_learning.util",
+        "description": "machine_learning.util",
+        "peekOfCode": "def recursive_json_compatible(elem: Any):\n    if isinstance(elem, np.ndarray):\n        return elem.tolist()\n    elif isinstance(elem, pd.DataFrame):\n        return elem.to_dict()\n    elif isinstance(elem, pd.Series):\n        if elem.index.equals(pd.Index(range(len(elem)))):\n            return elem.tolist()\n        else:\n            return elem.to_dict()",
+        "detail": "machine_learning.util",
+        "documentation": {}
+    },
+    {
+        "label": "map_list_json_compatible",
+        "kind": 2,
+        "importPath": "machine_learning.util",
+        "description": "machine_learning.util",
+        "peekOfCode": "def map_list_json_compatible(data: Any):\n    result = []\n    for elem in data:\n        result.append(recursive_json_compatible(elem))\n    return result",
+        "detail": "machine_learning.util",
+        "documentation": {}
+    },
+    {
+        "label": "ai_train_history",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def ai_train_history():\n    try:\n        session_id = set_session_id(session, session.get(\"session_id\", None))\n        if not session_id:\n            raise Exception(\"No Session Found\")\n        training_results = get_trained_history_results(session_id)\n        if not training_results:\n            raise Exception(\"No Trained Model instance\")\n        return jsonify(**training_results)\n    except Exception as e:",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "ai_train",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def ai_train():\n    try:\n        if \"training_data\" not in request.files:\n            raise Exception(\"No Dataset found\")\n        file = request.files.get(\"training_data\", None)\n        if not file or file.filename == \"\":\n            raise Exception(\"No selected file\")\n        data = {**request.form}\n        if file:\n            # Read the CSV file into a DataFrame",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "ai_predict",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def ai_predict():\n    try:\n        session_id = session.get(\"session_id\", None)\n        if not session_id:\n            raise Exception(\"No Session Found\")\n        ml = get_ml_instance(session_id)\n        if not ml:\n            raise Exception(\"No Trained Model instance\")\n        data = request.json\n        keys = {\"input\"}",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "home",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def home():\n    session_id = set_session_id(session, session.get(\"session_id\", None))\n    algorithms = get_all_algo_names()\n    return render_template(\"index.html\", session_id=session_id, algorithms=algorithms)\n@app.route(\"/train\", methods=[\"GET\"])\ndef train_html():\n    session_id = set_session_id(session, session.get(\"session_id\", None))\n    algorithms = get_all_algo_names()\n    algorithm = request.args.get(\"algorithm\")\n    category = str(",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "train_html",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def train_html():\n    session_id = set_session_id(session, session.get(\"session_id\", None))\n    algorithms = get_all_algo_names()\n    algorithm = request.args.get(\"algorithm\")\n    category = str(\n        next(category for category in algorithms.keys() if algorithms.get(category, {}).get(algorithm, False))\n    )\n    algorithm_name = algorithms.get(category, {}).get(algorithm, \"\")\n    algorithm_selection = algorithms.get(category)\n    has_trained = not not get_ml_instance(session_id)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "run_development",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def run_development(app):\n    try:\n        print(\"Running server on http://localhost:5000/\")\n        app.run(debug=True, host=\"0.0.0.0\", port=5000)\n    except Exception as e:\n        print(\"Error occured in flask app: \", e)\nif __name__ == \"__main__\":\n    run_development(app)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app = Flask(__name__)\napp.secret_key = os.environ.get(\"SECRET_KEY\") if \"SECRET_KEY\" in os.environ.keys() else generate_session_id()\nCORS(app)\n@app.route(\"/api/train_history\", methods=[\"GET\"])\ndef ai_train_history():\n    try:\n        session_id = set_session_id(session, session.get(\"session_id\", None))\n        if not session_id:\n            raise Exception(\"No Session Found\")\n        training_results = get_trained_history_results(session_id)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app.secret_key",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app.secret_key = os.environ.get(\"SECRET_KEY\") if \"SECRET_KEY\" in os.environ.keys() else generate_session_id()\nCORS(app)\n@app.route(\"/api/train_history\", methods=[\"GET\"])\ndef ai_train_history():\n    try:\n        session_id = set_session_id(session, session.get(\"session_id\", None))\n        if not session_id:\n            raise Exception(\"No Session Found\")\n        training_results = get_trained_history_results(session_id)\n        if not training_results:",
+        "detail": "app",
+        "documentation": {}
+    }
+]

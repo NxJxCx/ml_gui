@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category }} - Machine Learning Training{% endblock %}
+
+{% block content %}
+<div class="my-4" style="min-height: calc(100vh - 204px);">
+    <h2>{{ category }} - Machine Learning Training <span style="font-size: 0.5em;">(Session: {{session_id}})</span></h2>
+    <div class="accordion" id="training-accordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#training-collapse" aria-expanded="true" aria-controls="training-collapse">
+                    Training
+                </button>
+            </h2>
+            <div id="training-collapse" class="collapse show p-4">
+                <form id="training-form">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="training-data" class="form-label">Training Data (CSV)</label>
+                            <input type="file" class="form-control" id="training-data" name="training_data" accept=".csv" required>
+                        </div>
+            
+                        <div class="col-md-6 mb-3">
+                            <label for="train-algorithm-select" class="form-label">Algorithm</label>
+                            <select id="train-algorithm-select" class="form-select" name="algorithm">
+                                {% for algo, algo_name in algorithm_selection.items() %}
+                                <option value="{{ algo }}" {% if algo == algorithm %}selected{% endif %}>{{ algo_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="features" class="form-label">Features (separated by comma, e.g: f1,f2,f3):</label>
+                            <input type="text" class="form-control" id="features" name="features" placeholder="e.g: f1,f2,f3"required>
+                        </div>
+            
+                        <div class="col-md-6 mb-3">
+                            <label for="targets" class="form-label">Target/s (separated by comma if many, e.g: t1,t2,t3)</label>
+                            <input type="text" class="form-control" id="targets" name="targets" placeholder="e.g: t1, t2,t3" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% if algorithm == 'dtclassifier' %}
+                        <div class="col-md-4 mb-3">
+                            <label for="criterion" class="form-label">Criterion</label>
+                            <select id="criterion" class="form-select" name="criterion">
+                                <option value="gini">gini</option>
+                                <option value="entropy">entropy</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="random-state" class="form-label">Random State</label>
+                            <input type="number" class="form-control" id="random-state" name="random_state" value="" placeholder="Enter random state (optional)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="test-size" class="form-label">Test Size</label>
+                            <input type="number" class="form-control" id="test-size" name="test_size" value="0.25" step="0.01" min="0" max="1" placeholder="Enter test size (0 to 1)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="train-size" class="form-label">Train Size</label>
+                            <input type="number" class="form-control" id="train-size" name="train_size" value="" placeholder="Enter train size (optional)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="max-depth" class="form-label">Max Depth</label>
+                            <input type="number" class="form-control" id="max-depth" name="max_depth" value="" placeholder="Enter max depth (optional)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="min-samples-split" class="form-label">Min Samples Split</label>
+                            <input type="number" class="form-control" id="min-samples-split" name="min_samples_split" value="" min="2" placeholder="Enter min samples split (optional)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="min-samples-leaf" class="form-label">Min Samples Leaf</label>
+                            <input type="number" class="form-control" id="min-samples-leaf" name="min_samples_leaf" value="" min="1" placeholder="Enter min samples leaf (optional)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="max-features" class="form-label">Max Features</label>
+                            <input type="text" class="form-control" id="max-features" name="max_features" value="" placeholder="Enter max features (auto, sqrt, log2) (optional)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="splitter" class="form-label">Splitter</label>
+                            <select id="splitter" class="form-select" name="splitter">
+                                <option value="best">best</option>
+                                <option value="random">random</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="max-leaf-nodes" class="form-label">Max Leaf Nodes</label>
+                            <input type="number" class="form-control" id="max-leaf-nodes" name="max_leaf_nodes" value="" placeholder="Enter max leaf nodes (optional)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="min-impurity-decrease" class=" form-label">Min Impurity Decrease</label>
+                            <input type="number" class="form-control" id="min-impurity-decrease" name="min_impurity_decrease" value="" step="0.01" placeholder="Enter min impurity decrease (optional)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="shuffle" class="form-label">Shuffle</label>
+                            <select class="form-control" id="shuffle" name="shuffle">
+                                <option value="true">True</option>
+                                <option value="false">False</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="stratify" class="form-label">Stratify</label>
+                            <input type="text" class="form-control" id="stratify" name="stratify" value="" placeholder="Enter stratify (optional)">
+                        </div>
+                        {% elif algorithm == 'dtregressor' %}
+                        <div class="col-md-4 mb-3">
+                            <label for="random-state" class="form-label">Random State</label>
+                            <input type="number" class="form-control" id="random-state" name="random_state" value="" placeholder="Enter random state (optional)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="test-size" class="form-label">Test Size</label>
+                            <input type="number" class="form-control" id="test-size" name="test_size" value="0.25" step="0.01" min="0" max="1" placeholder="Enter test size (0 to 1)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="train-size" class="form-label">Train Size</label>
+                            <input type="number" class="form-control" id="train-size" name="train_size" value="" placeholder="Enter train size (optional)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="max-depth" class="form-label">Max Depth</label>
+                            <input type="number" class="form-control" id="max-depth" name="max_depth" value="" placeholder="Enter max depth (optional)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="min-samples-split" class="form-label">Min Samples Split</label>
+                            <input type="number" class="form-control" id="min-samples-split" name="min_samples_split" value="" min="2" placeholder="Enter min samples split (optional)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="min-samples-leaf" class="form-label">Min Samples Leaf</label>
+                            <input type="number" class="form-control" id="min-samples-leaf" name="min_samples_leaf" value="" min="1" placeholder="Enter min samples leaf (optional)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="max-features" class="form-label">Max Features</label>
+                            <input type="text" class="form-control" id="max-features" name="max_features" value="" placeholder="Enter max features (auto, sqrt, log2) (optional)">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="splitter" class="form-label">Splitter</label>
+                            <select id="splitter" class="form-select" name="splitter">
+                                <option value="best">best</option>
+                                <option value="random">random</option>
+                            </select>
+                        </div>
+                        {% endif %}
+                    </div>
+            
+                    <button type="submit" class="btn btn-primary">Train Model</button>
+                </form>
+            </div>
+        </div>
+        <div class="accordion-item my-4">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" id="results-accordion-button" data-bs-toggle="collapse" data-bs-target="#training-results-collapse" aria-expanded="false" aria-controls="training-results-collapse">
+                    Training Results
+                </button>
+            </h2>
+            <div id="training-results-collapse" class="collapse p-4 {% if has_trained %}show{% endif %}">
+                <div id="training-results">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item my-4">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" id="predict-accordion-button" data-bs-toggle="collapse" data-bs-target="#predict-collapse" aria-expanded="false" aria-controls="predict-collapse">
+                    Use Trained model to predict
+                </button>
+            </h2>
+            <div id="predict-collapse" class="collapse p-4">
+                <form id="prediction-form" method="POST" action="{{ url_for('ai_predict') }}">
+                    <div class="row">
+
+                    </div>
+                    <button type="button" class="btn btn-primary" id="predict-add-feature">Add +</button>
+                    <button type="submit" class="btn btn-success">Predict</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

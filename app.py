@@ -1,37 +1,159 @@
-from flask import Flask, request, jsonify
+import os
+import pandas as pd
+import json
+from flask import Flask, jsonify, render_template, request, session
 from flask_cors import CORS
-from sklearn.linear_model import LinearRegression
-import numpy as np
+
+from machine_learning.util import generate_session_id
+from machine_learning.ml_util import (
+    get_all_algo_names,
+    get_ml_instance,
+    get_trained_history_results,
+    remove_ml_instance,
+    set_ml_instance,
+    set_session_id,
+)
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY") if "SECRET_KEY" in os.environ.keys() else generate_session_id()
+
 CORS(app)
 
-# A simple endpoint for machine learning predictions
-@app.route('/predict', methods=['POST'])
-def predict():
-    # Example: Accept JSON data { "input": [1.0, 2.0, 3.0] }
-    data = request.json
-    input_data = np.array(data["input"]).reshape(-1, 1)
-    
-    # Dummy ML model
-    model = LinearRegression()
-    X_train = np.array([[1], [2], [3], [4]])
-    y_train = np.array([2, 4, 6, 8])
-    model.fit(X_train, y_train)
 
-    prediction = model.predict(input_data).tolist()
-    return jsonify({"prediction": prediction})
+@app.route("/api/train_history", methods=["GET"])
+def ai_train_history():
+    try:
+        session_id = set_session_id(session, session.get("session_id", None))
+        if not session_id:
+            raise Exception("No Session Found")
+        training_results = get_trained_history_results(session_id)
+        if not training_results:
+            raise Exception("No Trained Model instance")
+        return jsonify(**training_results)
+    except Exception as e:
+        return jsonify(error=f"{e}")
+    except:
+        return jsonify(error=f"Internal Server Error (500)")
 
-@app.route('/')
+
+@app.route("/api/train", methods=["POST"])
+def ai_train():
+    try:
+        if "training_data" not in request.files:
+            raise Exception("No Dataset found")
+
+        file = request.files.get("training_data", None)
+
+        if not file or file.filename == "":
+            raise Exception("No selected file")
+
+        data = {**request.form}
+        if file:
+            # Read the CSV file into a DataFrame
+            dataset = pd.read_csv(file)
+            # add the dataset to data
+            data["dataset"] = dataset
+
+        keys = {"dataset", "algo", "features", "target", "hyperparameters"}
+        for key in keys:
+            if key not in data.keys():
+                raise Exception("Invalid Request (400)")
+
+        session_id = set_session_id(session, session.get("session_id", None))
+        remove_ml_instance(session_id)  # remove the previous machine learning class first
+        algo = data.get("algo")
+        dataset = data.get("dataset")
+        column_features = data.get("features")
+        column_features = json.loads(column_features)
+        column_target = data.get("target")
+        column_target = json.loads(column_target)
+        set_ml_instance(session_id, algo, dataset=dataset, column_features=column_features, column_target=column_target)
+        ml = get_ml_instance(session_id)
+        if not ml:
+            raise Exception("Algorithm not found")
+        hyperparameters = data.get("hyperparameters")
+        hyperparameters = json.loads(hyperparameters)
+        hyperparameters = {k: val for k, val in hyperparameters.items() if val is not None}
+        ml.configure_training(**hyperparameters)
+        ml.train_model()  # train the model
+        trained = ml.train_model()
+        if not trained:
+            remove_ml_instance(session_id)
+            raise Exception("Failed to train model. Check your hyperparameters for errors.")
+        print("training_results")
+        training_results = get_trained_history_results(session_id)
+        print("has training results")
+        if not training_results:
+            raise Exception("Failed to train model. Check your hyperparameters for errors.")
+        print(training_results)
+        return jsonify(**training_results)
+    except Exception as e:
+        print("error:", e)
+        return jsonify(error=f"{e}")
+    except:
+        print("ERROR!")
+        return jsonify(error=f"Internal Server Error (500)")
+
+
+@app.route("/api/predict", methods=["POST"])
+def ai_predict():
+    try:
+        session_id = session.get("session_id", None)
+        if not session_id:
+            raise Exception("No Session Found")
+        ml = get_ml_instance(session_id)
+        if not ml:
+            raise Exception("No Trained Model instance")
+        data = request.json
+        keys = {"input"}
+        for key in keys:
+            if key not in data.get(key):
+                raise Exception("Invalid Request (400)")
+        result = ml.predict(data.get("input"))
+        return jsonify(result=result)
+    except Exception as e:
+        return jsonify(error=f"{e}")
+    except:
+        return jsonify(error=f"Internal Server Error (500)")
+
+
+@app.route("/", methods=["GET"])
 def home():
-    return render_template('index.html')
+    session_id = set_session_id(session, session.get("session_id", None))
+    algorithms = get_all_algo_names()
+    return render_template("index.html", session_id=session_id, algorithms=algorithms)
 
-# API route with CORS support
-@app.route('/api/greet', methods=['POST'])
-def greet():
-    data = request.json
-    name = data.get('name', 'Guest')
-    return jsonify(message=f"Hello, {name}!")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route("/train", methods=["GET"])
+def train_html():
+    session_id = set_session_id(session, session.get("session_id", None))
+    algorithms = get_all_algo_names()
+    algorithm = request.args.get("algorithm")
+    category = str(
+        next(category for category in algorithms.keys() if algorithms.get(category, {}).get(algorithm, False))
+    )
+    algorithm_name = algorithms.get(category, {}).get(algorithm, "")
+    algorithm_selection = algorithms.get(category)
+    has_trained = not not get_ml_instance(session_id)
+    return render_template(
+        "train.html",
+        session_id=session_id,
+        algorithms=algorithms,
+        algorithm=algorithm,
+        category=category,
+        algorithm_name=algorithm_name,
+        algorithm_selection=algorithm_selection,
+        has_trained=has_trained,
+    )
+
+
+def run_development(app):
+    try:
+        print("Running server on http://localhost:5000/")
+        app.run(debug=True, host="0.0.0.0", port=5000)
+    except Exception as e:
+        print("Error occured in flask app: ", e)
+
+
+if __name__ == "__main__":
+    run_development(app)

@@ -1,33 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask-CORS Starter</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <h1>Flask with CORS</h1>
-    <form id="greet-form">
-        <input type="text" id="name" placeholder="Enter your name" />
-        <button type="submit">Send</button>
-    </form>
-    <p id="response"></p>
-    <script>
-        document.getElementById('greet-form').addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const name = document.getElementById('name').value;
+{% extends "base.html" %}
 
-            // Example CORS request (replace with actual server if different)
-            const response = await fetch('/api/greet', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name })
-            });
+{% block title %}Welcome to the Machine Learning App{% endblock %}
 
-            const data = await response.json();
-            document.getElementById('response').innerText = data.message;
-        });
-    </script>
-</body>
-</html>
+{% block content %}
+    <h1>Welcome to the Machine Learning App</h1>
+    <p>This application allows you to train machine learning models and make predictions based on your data.</p>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Get Started</h5>
+            <p class="card-text">Use the navigation bar to start building your AI with Machine Learning.</p>
+            <div id="algorithms">
+                {% for category, item in algorithms.items() %}
+                <h3 class="mt-4">{{ category }}</h3>
+                <ul class="min-w-100" style="max-width: 500px;">
+                    {% for algo, label in item.items() %}
+                    <li class="d-flex align-items-center justify-content-between mb-2">
+                        <h5>{{label}}</h5>
+                        <a href="{{ url_for('train_html', algorithm=algo) }}" class="btn btn-primary">Start Training</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
