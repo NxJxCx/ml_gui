@@ -21,5 +21,7 @@
       ]
     }
   },
-  "postCreateCommand": "pip install --upgrade pip && pip install -r requirements.txt"
+  "postCreateCommand": "pip install --upgrade pip && pip install -r requirements.txt",
+  "postStartCommand": "flask run --host=0.0.0.0 --port=5000",
+  "forwardPorts": [5000]
 }
