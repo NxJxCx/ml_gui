@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask-CORS Starter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Flask with CORS</h1>
+    <form id="greet-form">
+        <input type="text" id="name" placeholder="Enter your name" />
+        <button type="submit">Send</button>
+    </form>
+    <p id="response"></p>
+    <script>
+        document.getElementById('greet-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+
+            // Example CORS request (replace with actual server if different)
+            const response = await fetch('/api/greet', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name })
+            });
+
+            const data = await response.json();
+            document.getElementById('response').innerText = data.message;
+        });
+    </script>
+</body>
+</html>
