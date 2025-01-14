@@ -2,6 +2,7 @@ import base64
 import secrets
 from io import BytesIO
 from typing import Any
+from weakref import WeakMethod
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -39,7 +40,10 @@ def get_image_data_from_plot(plot_func) -> bytes:
     img_stream = BytesIO()
 
     # Generate the plot using the provided function
-    plot_func()
+    pf = WeakMethod(plot_func)
+    func = pf()
+    if func:
+        func()
 
     # Save the plot to the image stream in PNG format
     plt.savefig(img_stream, format="png")

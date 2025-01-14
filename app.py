@@ -80,12 +80,9 @@ def ai_train():
         if not trained:
             remove_ml_instance(session_id)
             raise Exception("Failed to train model. Check your hyperparameters for errors.")
-        print("training_results")
         training_results = get_trained_history_results(session_id)
-        print("has training results")
         if not training_results:
             raise Exception("Failed to train model. Check your hyperparameters for errors.")
-        print(training_results)
         return jsonify(**training_results)
     except Exception as e:
         print("error:", e)
@@ -99,18 +96,21 @@ def ai_train():
 def ai_predict():
     try:
         session_id = session.get("session_id", None)
+        print("session id:", session_id)
         if not session_id:
             raise Exception("No Session Found")
         ml = get_ml_instance(session_id)
         if not ml:
             raise Exception("No Trained Model instance")
-        data = request.json
+        data = {**request.json}
         keys = {"input"}
         for key in keys:
-            if key not in data.get(key):
+            if key not in data.keys():
                 raise Exception("Invalid Request (400)")
-        result = ml.predict(data.get("input"))
-        return jsonify(result=result)
+        dinput: dict = data.get("input", {})
+        dinput = {y:z for y,z in map(lambda x: [x[0], [x[1]]], dinput.items())}
+        result = ml.predict(dinput)
+        return jsonify(result=[*result.tolist()])
     except Exception as e:
         return jsonify(error=f"{e}")
     except:

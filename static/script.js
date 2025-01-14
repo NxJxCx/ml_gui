@@ -5,13 +5,12 @@ $(function() {
         window.location.href = url.toString();  // redirect to specific algorithm to train
     });
     const $loadingOverlay = (/*html*/`
-        <div class="loading-overlay">
-            <div class="spinner-border text-light" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-            <p>Loading, please wait...</p>
+        <div class="spinner-border text-primary loading-overlay" role="status">
+            <span class="visually-hidden">Loading...</span>
         </div>
     `);
+
+    var saved_features = []
 
     function showLoading(id) {
         $(id).empty().append($($loadingOverlay))
@@ -20,47 +19,83 @@ $(function() {
         $(id).find(".loading-overlay").remove()
     }
     
+    function addFeaturesInputForPrediction() {
+        $("#predict-input-container").empty()
+        saved_features.forEach((feature) => {
+            $("#predict-input-container").append(/*html*/`
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                       <label for="${feature.trim().replace(' ', '')}-feature" class="form-label">${feature}</label>
+                       <input type="text" class="form-control" id="${feature.trim().replace(' ', '')}" name="${feature}" placeholder="Enter value for ${feature}" required>
+                    </div>
+                </div>
+            `)
+        })
+    }
     function displayTrainingResults(data) {
         const $algorithmElem = $(/*html*/`
             <h4>Algorithm: ${data.algorithm_name}</h4>
         `);
-        const $datasetLength = $(/*html*/`
-            <p>Dataset Size: ${data.dataset.length}</p>
-        `);
         const $features = $(/*html*/`
-            <p>Features: [${data.features.join(", ")}]</p>
+            <div><h6>Features:</h6> <p>[${data.features.join(", ")}]</p></div>
         `);
         const $targets = $(/*html*/`
-            <p>Target/s: [${data.target.join(", ")}]</p>
+            <div><h6>Target/s:</h6> <p>[${data.target.join(", ")}]</p></div>
         `);
         const hyperp = Object.entries(data.hyperparameters).filter(([k,v]) => !!v);
 
         const $hyperparameters = $(/*html*/`
-            <div class="my-2 d-flex justify-content-between column-gap-2 row-gap-2">
-                <p>Hyperparameters used:</p>
-                ${hyperp.map(([k, v]) => {
-                    return "<p>" + k + " = " + v + "</p>"
-                }).join("")}
+            <div>
+                <h6>Hyperparameters used:</h6>
+                <div class="my-2 d-flex justify-content-between column-gap-2 row-gap-2 flex-wrap">
+                    ${hyperp.map(([k, v]) => {
+                        return "<p>" + k + " = " + v + "</p>"
+                    }).join("")}
+                </div>
             </div>
         `);
+        const evals = Object.entries(data.evaluation).filter(([k,v]) => v !== null);
         const $evaluation = $(/*html*/`
-            <div class="my-2 d-flex justify-content-between column-gap-2 row-gap-2">
-                ${data.evaluation.entries().map(([k, v]) => {
-                    return "<h5>" + k.split('_').join(' ').toUpperCase() + "</h5><p>" + v.toString() + "</p>"
-                }).join("")}
+            <div class="max-w-100 text-wrap">
+                <h6>Evaluations:</h6>
+                <div class="my-2 d-flex flex-column justify-content-between column-gap-2 row-gap-2 text-wrap">
+                    ${evals.map(([k, v]) => {
+                        return "<h5>" + k.split('_').join(' ').toUpperCase() + "</h5><p class='text-wrap'>" + JSON.stringify(v) + "</p>"
+                    }).join("")}
+                </div>
             </div>
         `)
+        const plotImgs = Object.entries(data.plots).filter(([k, v]) => !!v);
         const $plots = $(/*html*/`
-            <div class="my-2">
-                ${data.plots.entries().map(([k, v]) => {
-                    return '<div><h5>' + k.split('_').join(' ').toUpperCase() + '</h5><img src="data:image/png;base64,' + v + '" />' + '</div>'
-                }).join("")}
+            <div class="max-w-100">
+                <h5 class="mx-auto">Plots:</h5>
+                <div class="d-flex column-gap-4 row-gap-4 flex-wrap w-100">
+                    ${plotImgs.map(([k, v]) => {
+                        return  '<div class="d-flex flex-column justify-content-center align-items-start" style="max-width: 600px;">' +
+                                    '<h6 class="text-center">' + k.split('_').join(' ').toUpperCase() + '</h6>' +
+                                    '<img class="object-fit-contain w-100" src="data:image/png;base64,' + v + '" />' +
+                                '</div>'
+                    }).join("")}
+                </div>
             </div>
         `)
+
+        
+        $("#training-results")
+            .append($algorithmElem)
+            .append($features)
+            .append($targets)
+            .append($hyperparameters)
+            .append($evaluation)
+            .append($plots)
+
+        saved_features = [...data.features]
+        addFeaturesInputForPrediction()
     }
 
     $("form#training-form").on("submit", function(event) {
         event.preventDefault();
+        showLoading("#training-results");
         const formData = new FormData();
         const fileInput = $(this).find("input[type=file][name=training_data]");
 
@@ -93,11 +128,15 @@ $(function() {
         xhr.open('POST', url.toString(), true);
 
         xhr.onload = function() {
-            removeLoading("#training-results");
             if (xhr.status === 200) {
                 try {
                     const response = JSON.parse(xhr.responseText);
-                    console.log('Response:', response);
+                    removeLoading("#training-results");
+                    if (response.error) {
+                        console.log('Error:', response.error);
+                    } else {
+                        displayTrainingResults(response);
+                    }
                 } catch (e) {
                     console.log('Error parsing JSON:', e);
                 }
@@ -105,10 +144,38 @@ $(function() {
                 console.log('Error uploading file: ' + xhr.statusText);
             }
         };
-        showLoading("#training-results");
         xhr.send(formData);
     })
 
+    
+    $("form#prediction-form").on("submit", function(event) {
+        event.preventDefault()
+        const formData = new FormData($(this).get(0))
+        const bodyData = {
+            input: Object.fromEntries(formData),
+        }
+        bodyData["input"] = Object.fromEntries(Object.entries(bodyData['input']).map(([k,v]) => [k, !Number.isNaN(Number.parseFloat(v)) ? Number.parseFloat(v) : (
+            !Number.isNaN(Number.parseInt(v)) ? Number.parseInt(v) : v
+        ) ]));
+        const url = new URL("/api/predict", window.location.origin)
+        $.ajax({
+            url: url.toString(),
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(bodyData),
+            success: function(response) {
+                if (response.error) {
+                    console.log("ERROR:", response.error);
+                } else {
+                    $("#prediction-result").empty().text(response.result.toString());
+                }
+            },
+            error: function(_, statusText) {
+                console.log("Error:", statusText);
+            }
+        });
+        
+    })
 
     function fetchTrainingHistory() {
         if (window.location.pathname === "/train") {
@@ -117,7 +184,6 @@ $(function() {
             $.get(url.toString())
                 .done(function(data) {
                     removeLoading("#training-results");
-                    console.log("FETCHED HISTORY:", data)
                     if (data.error) {
                         console.log(data.error)
                     } else{

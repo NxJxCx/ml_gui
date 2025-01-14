@@ -79,13 +79,6 @@ class MLBase:
             return False
         # start training time
         start_time = perf_counter()
-        print("started training:", start_time)
-        print("X_train")
-        print(self.X_train)
-        print("y_train")
-        print(self.y_train)
-        print("clf")
-        print(self._algo)
         # Train the model
         self._algo.fit(self.X_train, self.y_train)
         # end training time
@@ -107,6 +100,8 @@ class MLBase:
             return None
         if type(input_data) is dict:
             input_data = pd.DataFrame(input_data)
+        elif isinstance(input_data, pd.DataFrame):
+            pass
         elif isinstance(input_data, pd.Series):
             input_data = input_data.values.reshape(-1, 1)
         elif not type(input_data) is list and not type(input_data) is tuple and not isinstance(input_data, NDArray):

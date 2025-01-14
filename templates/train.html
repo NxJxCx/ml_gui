@@ -153,7 +153,7 @@
                 </button>
             </h2>
             <div id="training-results-collapse" class="collapse p-4 {% if has_trained %}show{% endif %}">
-                <div id="training-results">
+                <div id="training-results" class="max-w-100 position-relative d-block">
                     
                 </div>
             </div>
@@ -165,13 +165,16 @@
                 </button>
             </h2>
             <div id="predict-collapse" class="collapse p-4">
-                <form id="prediction-form" method="POST" action="{{ url_for('ai_predict') }}">
-                    <div class="row">
-
+                <form id="prediction-form" method="POST">
+                    <div class="container" id="predict-input-container">
+                        
                     </div>
-                    <button type="button" class="btn btn-primary" id="predict-add-feature">Add +</button>
                     <button type="submit" class="btn btn-success">Predict</button>
                 </form>
+                <div class="my-4">
+                    <h6>Prediction:</h6>
+                    <h5 id="prediction-result"></h5>
+                </div>
             </div>
         </div>
     </div>

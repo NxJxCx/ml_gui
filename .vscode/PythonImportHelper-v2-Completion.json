@@ -333,6 +333,14 @@
         "documentation": {}
     },
     {
+        "label": "WeakMethod",
+        "importPath": "weakref",
+        "description": "weakref",
+        "isExtraImport": true,
+        "detail": "weakref",
+        "documentation": {}
+    },
+    {
         "label": "json",
         "kind": 6,
         "isExtraImport": true,
@@ -549,7 +557,7 @@
         "kind": 2,
         "importPath": "machine_learning.ml_util",
         "description": "machine_learning.ml_util",
-        "peekOfCode": "def set_ml_instance(key: str, algo: str, *args, **kwargs):\n    global ml_instances\n    if key in ml_instances.keys():\n        AlgorithmClass = get_class_from_algo(algo)\n        if AlgorithmClass:\n            ml_instances[key] = AlgorithmClass(*args, **kwargs)\ndef get_plots(session_id: str) -> Dict[str, bytes]:\n    global ml_instances\n    if session_id in ml_instances.keys():\n        ml = ml_instances.get(session_id, None)",
+        "peekOfCode": "def set_ml_instance(key: str, algo: str, *args, **kwargs):\n    global ml_instances\n    if key in ml_instances.keys():\n        AlgorithmClass = get_class_from_algo(algo)\n        if AlgorithmClass:\n            ml_instances[key] = AlgorithmClass(*args, **kwargs)\ndef get_plots(session_id: str) -> Dict[str, str]:\n    global ml_instances\n    if session_id in ml_instances.keys():\n        ml = ml_instances.get(session_id, None)",
         "detail": "machine_learning.ml_util",
         "documentation": {}
     },
@@ -558,7 +566,7 @@
         "kind": 2,
         "importPath": "machine_learning.ml_util",
         "description": "machine_learning.ml_util",
-        "peekOfCode": "def get_plots(session_id: str) -> Dict[str, bytes]:\n    global ml_instances\n    if session_id in ml_instances.keys():\n        ml = ml_instances.get(session_id, None)\n        if not ml:\n            return {}\n        if isinstance(ml, DecisionTreeClassification):\n            cd = encode_base64(ml.plot_class_distribution())\n            cm = encode_base64(ml.plot_confusion_matrix())\n            lc = encode_base64(ml.plot_learning_curve())",
+        "peekOfCode": "def get_plots(session_id: str) -> Dict[str, str]:\n    global ml_instances\n    if session_id in ml_instances.keys():\n        ml = ml_instances.get(session_id, None)\n        if not ml:\n            return {}\n        if isinstance(ml, DecisionTreeClassification):\n            cd = encode_base64(ml.plot_class_distribution())\n            cm = encode_base64(ml.plot_confusion_matrix())\n            lc = encode_base64(ml.plot_learning_curve())",
         "detail": "machine_learning.ml_util",
         "documentation": {}
     },
@@ -612,7 +620,7 @@
         "kind": 2,
         "importPath": "machine_learning.util",
         "description": "machine_learning.util",
-        "peekOfCode": "def get_image_data_from_plot(plot_func) -> bytes:\n    \"\"\"\n    Captures image data from a plot function.\n    :param plot_func: A function that generates a plot (e.g., `plot_tree`, `disp.plot`, etc.)\n    :return: Image data as bytes (in PNG format).\n    \"\"\"\n    # Create a BytesIO object to save the plot as image data\n    img_stream = BytesIO()\n    # Generate the plot using the provided function\n    plot_func()",
+        "peekOfCode": "def get_image_data_from_plot(plot_func) -> bytes:\n    \"\"\"\n    Captures image data from a plot function.\n    :param plot_func: A function that generates a plot (e.g., `plot_tree`, `disp.plot`, etc.)\n    :return: Image data as bytes (in PNG format).\n    \"\"\"\n    # Create a BytesIO object to save the plot as image data\n    img_stream = BytesIO()\n    # Generate the plot using the provided function\n    pf = WeakMethod(plot_func)",
         "detail": "machine_learning.util",
         "documentation": {}
     },
@@ -666,7 +674,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def ai_predict():\n    try:\n        session_id = session.get(\"session_id\", None)\n        if not session_id:\n            raise Exception(\"No Session Found\")\n        ml = get_ml_instance(session_id)\n        if not ml:\n            raise Exception(\"No Trained Model instance\")\n        data = request.json\n        keys = {\"input\"}",
+        "peekOfCode": "def ai_predict():\n    try:\n        session_id = session.get(\"session_id\", None)\n        print(\"session id:\", session_id)\n        if not session_id:\n            raise Exception(\"No Session Found\")\n        ml = get_ml_instance(session_id)\n        if not ml:\n            raise Exception(\"No Trained Model instance\")\n        data = {**request.json}",
         "detail": "app",
         "documentation": {}
     },

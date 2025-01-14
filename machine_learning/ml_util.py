@@ -63,7 +63,7 @@ def set_ml_instance(key: str, algo: str, *args, **kwargs):
             ml_instances[key] = AlgorithmClass(*args, **kwargs)
 
 
-def get_plots(session_id: str) -> Dict[str, bytes]:
+def get_plots(session_id: str) -> Dict[str, str]:
     global ml_instances
     if session_id in ml_instances.keys():
         ml = ml_instances.get(session_id, None)
