@@ -2,18 +2,20 @@ from typing import Any, Dict, List, Literal, Optional, Tuple, Union
 
 import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.metrics import (ConfusionMatrixDisplay, accuracy_score,
-                             classification_report, confusion_matrix,
-                             mean_squared_error, r2_score)
-from sklearn.model_selection import (cross_val_score, learning_curve,
-                                     train_test_split)
+from sklearn.metrics import (
+    ConfusionMatrixDisplay,
+    accuracy_score,
+    classification_report,
+    confusion_matrix,
+    mean_squared_error,
+    r2_score,
+)
+from sklearn.model_selection import cross_val_score, learning_curve, train_test_split
 from sklearn.preprocessing import OneHotEncoder
-from sklearn.tree import (DecisionTreeClassifier, DecisionTreeRegressor,
-                          plot_tree)
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor, plot_tree
 
 from .base import MLBase
-from .util import (encode_base64, get_image_data_from_plot,
-                   map_list_json_compatible)
+from .util import encode_base64, get_image_data_from_plot, map_list_json_compatible
 
 
 def get_plots_by_instance(ml):

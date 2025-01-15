@@ -5,10 +5,14 @@ import pandas as pd
 from flask import Flask, jsonify, render_template, request, session
 from flask_cors import CORS
 
-from machine_learning.ml_util import (get_all_algo_names, get_ml_instance,
-                                      get_trained_history_results,
-                                      remove_ml_instance, set_ml_instance,
-                                      set_session_id)
+from machine_learning.ml_util import (
+    get_all_algo_names,
+    get_ml_instance,
+    get_trained_history_results,
+    remove_ml_instance,
+    set_ml_instance,
+    set_session_id,
+)
 from machine_learning.util import generate_session_id
 
 app = Flask(__name__)

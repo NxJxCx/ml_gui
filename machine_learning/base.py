@@ -69,7 +69,9 @@ class MLBase:
         self.target = self.data[self._target]
         self.hot_encode()
 
-    def encode_features(self, features_to_encode: Union[List[str], Tuple[str]], feature_df: pd.DataFrame, drop_first: bool =True) -> pd.DataFrame:
+    def encode_features(
+        self, features_to_encode: Union[List[str], Tuple[str]], feature_df: pd.DataFrame, drop_first: bool = True
+    ) -> pd.DataFrame:
         if len(features_to_encode) > 0:
             return pd.get_dummies(feature_df, columns=features_to_encode, drop_first=drop_first)
         return feature_df
