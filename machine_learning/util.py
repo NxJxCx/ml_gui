@@ -10,7 +10,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-matplotlib.use('Agg')
+matplotlib.use("Agg")
+
 
 def encode_base64(byte_data: bytes) -> str:
     """
@@ -47,6 +48,7 @@ def get_image_data_from_plot_thread(plot_func, figsize: Optional[Tuple[int, int]
     img_stream.close()
     return img
 
+
 def get_image_data_from_plot(plot_func, figsize: Optional[Tuple[int, int]] = None) -> bytes:
     """
     Runs the get_image_data_from_plot function in a separate thread.
@@ -57,6 +59,7 @@ def get_image_data_from_plot(plot_func, figsize: Optional[Tuple[int, int]] = Non
     with ThreadPoolExecutor() as executor:
         future = executor.submit(get_image_data_from_plot_thread, plot_func, figsize)
         return future.result()
+
 
 def generate_session_id():
     return secrets.token_hex(12)
