@@ -197,14 +197,18 @@ $(function() {
                     const response = JSON.parse(xhr.responseText);
                     if (response.error) {
                         console.log('Error:', response.error);
+                        $("#error-message").empty().text(response.error)
                     } else {
+                        $("#error-message").empty();
                         displayTrainingResults(response);
                     }
                 } catch (e) {
                     console.log('Error parsing JSON:', e);
+                    $("#error-message").empty().text(e.toString())
                 }
             } else {
                 console.log('Error uploading file: ' + xhr.statusText);
+                $("#error-message").empty().text(xhr.statusText);
             }
             removeLoading("#training-results");
             removeLoading("#predict-input-container");
