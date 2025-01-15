@@ -197,7 +197,7 @@ class DecisionTreeClassification(MLBase):
         conf_matrix = confusion_matrix(self.y_test, self.y_pred, labels=self._algo.classes_)
         feature_importance = self._algo.feature_importances_
         lc = learning_curve(self._algo, self.features, self.target, cv=5, scoring="accuracy", n_jobs=-1)
-        class_distribution = (self.data["Recommended_Strand"].value_counts(),)
+        class_distribution = (self.data[self._target].value_counts(),)
         return {
             "test_accuracy": accuracy,  # test accuracy
             "training_accuracy": train_accuracy,  # training accuracy
