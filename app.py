@@ -108,7 +108,7 @@ def ai_predict():
             if key not in data.keys():
                 raise Exception("Invalid Request (400)")
         dinput: dict = data.get("input", {})
-        dinput = {y:z for y,z in map(lambda x: [x[0], [x[1]]], dinput.items())}
+        dinput = {y: z for y, z in map(lambda x: [x[0], [x[1]]], dinput.items())}
         result = ml.predict(dinput)
         return jsonify(result=[*result.tolist()])
     except Exception as e:

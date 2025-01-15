@@ -1,10 +1,8 @@
 from typing import Any, Dict, Optional
 
-from .util import encode_base64, generate_session_id, map_list_json_compatible
-
 from .base import MLBase
 from .decision_tree import DecisionTreeClassification, DecisionTreeRegression
-
+from .util import encode_base64, generate_session_id, map_list_json_compatible
 
 ml_instances: Dict[str, MLBase] = {}
 

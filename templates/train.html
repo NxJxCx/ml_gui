@@ -141,14 +141,13 @@
                         </div>
                         {% endif %}
                     </div>
-            
                     <button type="submit" class="btn btn-primary">Train Model</button>
                 </form>
             </div>
         </div>
         <div class="accordion-item my-4">
             <h2 class="accordion-header">
-                <button class="accordion-button" type="button" id="results-accordion-button" data-bs-toggle="collapse" data-bs-target="#training-results-collapse" aria-expanded="false" aria-controls="training-results-collapse">
+                <button class="accordion-button {% if has_trained %}collasped{% endif %}" type="button" id="results-accordion-button" data-bs-toggle="collapse" data-bs-target="#training-results-collapse" aria-expanded="{% if not has_trained %}false{% else %}true{% endif %}" aria-controls="training-results-collapse">
                     Training Results
                 </button>
             </h2>
@@ -160,16 +159,14 @@
         </div>
         <div class="accordion-item my-4">
             <h2 class="accordion-header">
-                <button class="accordion-button" type="button" id="predict-accordion-button" data-bs-toggle="collapse" data-bs-target="#predict-collapse" aria-expanded="false" aria-controls="predict-collapse">
+                <button class="accordion-button" type="button" id="predict-accordion-button" data-bs-toggle="collapse" data-bs-target="#predict-collapse" aria-expanded="{% if not has_trained %}false{% else %}true{% endif %}" aria-controls="predict-collapse">
                     Use Trained model to predict
                 </button>
             </h2>
-            <div id="predict-collapse" class="collapse p-4">
+            <div id="predict-collapse" class="collapse p-4 {% if has_trained %}show{% endif %}">
                 <form id="prediction-form" method="POST">
-                    <div class="container" id="predict-input-container">
-                        
-                    </div>
-                    <button type="submit" class="btn btn-success">Predict</button>
+                    <div class="container" id="predict-input-container"></div>
+                    <button type="submit" class="btn btn-success" id="predict-submit-button">Predict</button>
                 </form>
                 <div class="my-4">
                     <h6>Prediction:</h6>

@@ -11,14 +11,14 @@
     <div id="header">
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
-                <a class="navbar-brand" href="#">Machine Learning App</a>
+                <a class="navbar-brand" href="{{ url_for('home') }}">Machine Learning App</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
                         </li>
                         {% for category, item in algorithms.items() %}
                         <li class="nav-item">
@@ -46,7 +46,7 @@
             </div>
         </nav>
     </div>
-    <div id="root-content" class="container">
+    <div id="root-content" class="container" style="min-height: calc(100vh - 156px)">
         {% block content %}{% endblock %}
     </div>
     <div id="footer">

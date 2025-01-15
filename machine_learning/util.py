@@ -1,14 +1,16 @@
 import base64
-import secrets
-from io import BytesIO
-from typing import Any
-from weakref import WeakMethod
-
-import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
 import json
+import secrets
+from concurrent.futures import ThreadPoolExecutor
+from io import BytesIO
+from typing import Any, Optional, Tuple
 
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+matplotlib.use('Agg')
 
 def encode_base64(byte_data: bytes) -> str:
     """
@@ -30,30 +32,31 @@ def decode_base64(encoded_data: str) -> bytes:
     return base64.b64decode(encoded_data)
 
 
-def get_image_data_from_plot(plot_func) -> bytes:
-    """
-    Captures image data from a plot function.
-    :param plot_func: A function that generates a plot (e.g., `plot_tree`, `disp.plot`, etc.)
-    :return: Image data as bytes (in PNG format).
-    """
-    # Create a BytesIO object to save the plot as image data
+def get_image_data_from_plot_thread(plot_func, figsize: Optional[Tuple[int, int]] = None) -> bytes:
     img_stream = BytesIO()
 
-    # Generate the plot using the provided function
-    pf = WeakMethod(plot_func)
-    func = pf()
-    if func:
-        func()
-
-    # Save the plot to the image stream in PNG format
+    fig = plt.figure(figsize=figsize)
+    plot_func()
     plt.savefig(img_stream, format="png")
+    fig.clear()
+    plt.close()
 
-    # Rewind the buffer to the beginning for reading
     img_stream.seek(0)
 
-    # Return the image data as bytes
-    return img_stream.getvalue()
+    img = img_stream.getvalue()
+    img_stream.close()
+    return img
 
+def get_image_data_from_plot(plot_func, figsize: Optional[Tuple[int, int]] = None) -> bytes:
+    """
+    Runs the get_image_data_from_plot function in a separate thread.
+    :param plot_func: A function that generates a plot.
+    :param figsize: Tuple indicating the figure size (width, height).
+    :return: Image data as bytes (in PNG format).
+    """
+    with ThreadPoolExecutor() as executor:
+        future = executor.submit(get_image_data_from_plot_thread, plot_func, figsize)
+        return future.result()
 
 def generate_session_id():
     return secrets.token_hex(12)

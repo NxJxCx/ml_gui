@@ -1,19 +1,18 @@
 from typing import Any, Dict, List, Literal, Optional, Tuple, Union
-import pandas as pd
+
 import matplotlib.pyplot as plt
-from sklearn.metrics import (
-    ConfusionMatrixDisplay,
-    accuracy_score,
-    classification_report,
-    confusion_matrix,
-    mean_squared_error,
-    r2_score,
-)
-from sklearn.model_selection import cross_val_score, learning_curve, train_test_split
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor, plot_tree
+import pandas as pd
+from sklearn.metrics import (ConfusionMatrixDisplay, accuracy_score,
+                             classification_report, confusion_matrix,
+                             mean_squared_error, r2_score)
+from sklearn.model_selection import (cross_val_score, learning_curve,
+                                     train_test_split)
+from sklearn.tree import (DecisionTreeClassifier, DecisionTreeRegressor,
+                          plot_tree)
 
 from .base import MLBase
-from .util import get_image_data_from_plot, encode_base64, map_list_json_compatible
+from .util import (encode_base64, get_image_data_from_plot,
+                   map_list_json_compatible)
 
 
 def get_plots_by_instance(ml):
@@ -145,6 +144,7 @@ class DecisionTreeClassification(MLBase):
             shuffle=shuffle,
             stratify=stratify,
         )
+        print("Criterion:", criterion)
         # Create the DecisionTreeClassifier model with the specified hyperparameters
         self._algo = DecisionTreeClassifier(
             criterion=criterion,
@@ -208,10 +208,6 @@ class DecisionTreeClassification(MLBase):
             "class_distribution": class_distribution,  # class distribution
         }
 
-    def _plot_decision_tree(self):
-        plt.figure(figsize=(50, 25))
-        plot_tree(self._algo, filled=True, feature_names=self.features.columns, class_names=self._algo.classes_)
-
     def plot_decision_tree(self) -> bytes:
         """
         Plot the decision tree and capture the image data.
@@ -219,14 +215,10 @@ class DecisionTreeClassification(MLBase):
         :return: Image data of the decision tree plot.
         :rtype: bytes
         """
-        data = get_image_data_from_plot(self._plot_decision_tree)
-        plt.close()
+        def func():
+            plot_tree(self._algo, filled=True, feature_names=self.features.columns, class_names=self._algo.classes_)
+        data = get_image_data_from_plot(func, figsize=(50, 25))
         return data
-
-    def _plot_confusion_matrix(self):
-        cm = confusion_matrix(self.y_test, self.y_pred, labels=self._algo.classes_)
-        disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=self._algo.classes_)
-        disp.plot(cmap="viridis")
 
     def plot_confusion_matrix(self) -> bytes:
         """
@@ -235,15 +227,13 @@ class DecisionTreeClassification(MLBase):
         :return: Image data of the confusion matrix plot.
         :rtype: bytes
         """
-        data = get_image_data_from_plot(self._plot_confusion_matrix)
-        plt.close()
-        return data
+        def func():
+            cm = confusion_matrix(self.y_test, self.y_pred, labels=self._algo.classes_)
+            disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=self._algo.classes_)
+            disp.plot(cmap="viridis")
 
-    def _plot_feature_importance(self):
-        feature_importances = self._algo.feature_importances_
-        plt.bar(self.features.columns, feature_importances)
-        plt.xticks(rotation=45)
-        plt.title("Feature Importance")
+        data = get_image_data_from_plot(func)
+        return data
 
     def plot_feature_importance(self) -> bytes:
         """
@@ -252,20 +242,13 @@ class DecisionTreeClassification(MLBase):
         :return: Image data of the feature importance plot.
         :rtype: bytes
         """
-        data = get_image_data_from_plot(self._plot_feature_importance)
-        plt.close()
+        def func():
+            feature_importances = self._algo.feature_importances_
+            plt.bar(self.features.columns, feature_importances)
+            plt.xticks(rotation=45)
+            plt.title("Feature Importance")
+        data = get_image_data_from_plot(func)
         return data
-
-    def _plot_learning_curve(self):
-        train_sizes, train_scores, test_scores = learning_curve(
-            self._algo, self.features, self.target, cv=5, scoring="accuracy", n_jobs=-1
-        )
-        plt.plot(train_sizes, train_scores.mean(axis=1), label="Train Accuracy")
-        plt.plot(train_sizes, test_scores.mean(axis=1), label="Test Accuracy")
-        plt.legend()
-        plt.xlabel("Training Set Size")
-        plt.ylabel("Accuracy")
-        plt.title("Learning Curve")
 
     def plot_learning_curve(self) -> bytes:
         """
@@ -274,13 +257,18 @@ class DecisionTreeClassification(MLBase):
         :return: Image data of the learning curve plot.
         :rtype: bytes
         """
-
-        data = get_image_data_from_plot(self._plot_learning_curve)
-        plt.close()
+        def func():
+            train_sizes, train_scores, test_scores = learning_curve(
+                self._algo, self.features, self.target, cv=5, scoring="accuracy", n_jobs=-1
+            )
+            plt.plot(train_sizes, train_scores.mean(axis=1), label="Train Accuracy")
+            plt.plot(train_sizes, test_scores.mean(axis=1), label="Test Accuracy")
+            plt.legend(loc='best')
+            plt.xlabel("Training Set Size")
+            plt.ylabel("Accuracy")
+            plt.title("Learning Curve")
+        data = get_image_data_from_plot(func)
         return data
-
-    def _plot_class_distribution(self):
-        self.data[self._target].value_counts().plot(kind="bar", title="Class Distribution")
 
     def plot_class_distribution(self) -> bytes:
         """
@@ -289,8 +277,9 @@ class DecisionTreeClassification(MLBase):
         :return: Image data of the class distribution plot.
         :rtype: bytes
         """
-        data = get_image_data_from_plot(self._plot_class_distribution)
-        plt.close()
+        def func():
+            self.data[self._target].value_counts().plot(kind="bar", title="Class Distribution")
+        data = get_image_data_from_plot(func)
         return data
 
 
@@ -435,11 +424,9 @@ class DecisionTreeRegression(MLBase):
         """
 
         def func():
-            plt.figure(figsize=(50, 25))
             plot_tree(self._algo, filled=True, feature_names=self.features.columns)
-            plt.close()
 
-        return get_image_data_from_plot(func)
+        return get_image_data_from_plot(func, figsize=(50, 25))
 
     def plot_learning_curve(self) -> bytes:
         """
@@ -455,11 +442,10 @@ class DecisionTreeRegression(MLBase):
             )
             plt.plot(train_sizes, train_scores.mean(axis=1), label="Train MSE")
             plt.plot(train_sizes, test_scores.mean(axis=1), label="Test MSE")
-            plt.legend()
+            plt.legend(loc='best')
             plt.xlabel("Training Set Size")
             plt.ylabel("Mean Squared Error")
             plt.title("Learning Curve")
-            plt.close()
 
         return get_image_data_from_plot(func)
 
@@ -476,6 +462,5 @@ class DecisionTreeRegression(MLBase):
             plt.bar(self.features.columns, feature_importances)
             plt.xticks(rotation=45)
             plt.title("Feature Importance")
-            plt.close()
 
         return get_image_data_from_plot(func)

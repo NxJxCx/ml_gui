@@ -12,29 +12,58 @@ $(function() {
 
     var saved_features = []
 
+    function disablePredictSubmitButton() {
+        if (!$("#predict-submit-button").prop("disabled")) {
+            $("#predict-submit-button").prop("disabled", true);
+        }
+    }
+
+    function enablePredictSubmitButton() {
+        if ($("#predict-submit-button").prop("disabled")) {
+            $("#predict-submit-button").prop("disabled", false);
+        }
+    }
+
+
+    function showAccordionResults() {
+        if (!$($("#results-accordion-button").attr("data-bs-target")).hasClass("show")) {
+            $("#results-accordion-button").trigger("click");
+        }
+    }
+
+    function showAccordionPredict() {
+        if (!$($("#predict-accordion-button").attr("data-bs-target")).hasClass("show")) {
+            $("#predict-accordion-button").trigger("click");
+        }
+    }
+
     function showLoading(id) {
         $(id).empty().append($($loadingOverlay))
     }
     function removeLoading(id) {
         $(id).find(".loading-overlay").remove()
     }
-    
     function addFeaturesInputForPrediction() {
+        removeLoading("#predict-input-container");
         $("#predict-input-container").empty()
         saved_features.forEach((feature) => {
             $("#predict-input-container").append(/*html*/`
                 <div class="row">
                     <div class="col-md-4 mb-3">
-                       <label for="${feature.trim().replace(' ', '')}-feature" class="form-label">${feature}</label>
-                       <input type="text" class="form-control" id="${feature.trim().replace(' ', '')}" name="${feature}" placeholder="Enter value for ${feature}" required>
+                        <label for="${feature.trim().replaceAll(' ', '')}-feature" class="form-label">${feature}</label>
+                        <input type="text" class="form-control" id="${feature.trim().replaceAll(' ', '')}" name="${feature}" placeholder="Enter value for ${feature}" required>
                     </div>
                 </div>
             `)
-        })
+        });
+        enablePredictSubmitButton();
     }
     function displayTrainingResults(data) {
+        showAccordionResults();
+        showAccordionPredict();
+        disablePredictSubmitButton();
         const $algorithmElem = $(/*html*/`
-            <h4>Algorithm: ${data.algorithm_name}</h4>
+            <h4>Algorithm: ${data.algorithm}</h4>
         `);
         const $features = $(/*html*/`
             <div><h6>Features:</h6> <p>[${data.features.join(", ")}]</p></div>
@@ -60,7 +89,38 @@ $(function() {
                 <h6>Evaluations:</h6>
                 <div class="my-2 d-flex flex-column justify-content-between column-gap-2 row-gap-2 text-wrap">
                     ${evals.map(([k, v]) => {
-                        return "<h5>" + k.split('_').join(' ').toUpperCase() + "</h5><p class='text-wrap'>" + JSON.stringify(v) + "</p>"
+                        let val = ""
+                        console.log(k, "type:", typeof(v))
+                        console.log(v)
+                        if (Array.isArray(v)) {
+                            val = "<code>";
+                            const elem =  v.map((arr) => {
+                                if (Array.isArray(arr)) {
+                                    return arr.map((arr2) => {
+                                        console.log("ARR2:", arr2)
+                                        if (Array.isArray(arr2)) {
+                                            return arr2.map(item1 => (Math.round(item1 * 1000) / 1000)).join(",").padStart(4, " ").padEnd(6, " ");
+                                        } else {
+                                            return arr2.toString().padStart(4, " ").padEnd(6, " ");
+                                        }
+                                    }).join("  |  ")
+                                } else if (typeof(arr) === "object") {
+                                    return Object.entries(arr).map(([key,val]) => key + " = " + val.toString() + ",").join("    ");
+                                }
+                                return arr
+                            }).join("\n").replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;")
+                            val += elem + "</code>"
+                        } else {
+                            const elem = v.toString().replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;")
+                            val = "<code>" + elem + "</code>"
+                        }
+                        console.log("val is")
+                        console.log(val)
+                        result = "<h5>" + k.split('_').join(' ').toUpperCase() + "</h5><p class='text-wrap'>" +
+                            val.trim() + "</p>"
+                        console.log("result now is")
+                        console.log(result)
+                        return result;
                     }).join("")}
                 </div>
             </div>
@@ -80,7 +140,6 @@ $(function() {
             </div>
         `)
 
-        
         $("#training-results")
             .append($algorithmElem)
             .append($features)
@@ -91,11 +150,16 @@ $(function() {
 
         saved_features = [...data.features]
         addFeaturesInputForPrediction()
+        removeLoading("#training-results")
     }
 
     $("form#training-form").on("submit", function(event) {
         event.preventDefault();
         showLoading("#training-results");
+        showLoading("#predict-input-container");
+        disablePredictSubmitButton();
+        showAccordionResults();
+        showAccordionPredict();
         const formData = new FormData();
         const fileInput = $(this).find("input[type=file][name=training_data]");
 
@@ -131,7 +195,6 @@ $(function() {
             if (xhr.status === 200) {
                 try {
                     const response = JSON.parse(xhr.responseText);
-                    removeLoading("#training-results");
                     if (response.error) {
                         console.log('Error:', response.error);
                     } else {
@@ -143,11 +206,13 @@ $(function() {
             } else {
                 console.log('Error uploading file: ' + xhr.statusText);
             }
+            removeLoading("#training-results");
+            removeLoading("#predict-input-container");
         };
         xhr.send(formData);
     })
 
-    
+
     $("form#prediction-form").on("submit", function(event) {
         event.preventDefault()
         const formData = new FormData($(this).get(0))
@@ -174,13 +239,13 @@ $(function() {
                 console.log("Error:", statusText);
             }
         });
-        
     })
 
     function fetchTrainingHistory() {
         if (window.location.pathname === "/train") {
             const url = new URL("/api/train_history", window.location.origin)
             showLoading("#training-results");
+            showLoading("#predict-input-container");
             $.get(url.toString())
                 .done(function(data) {
                     removeLoading("#training-results");
