@@ -2,19 +2,18 @@ from typing import Any, Dict, List, Literal, Optional, Tuple, Union
 
 import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.metrics import (
-    ConfusionMatrixDisplay,
-    accuracy_score,
-    classification_report,
-    confusion_matrix,
-    mean_squared_error,
-    r2_score,
-)
-from sklearn.model_selection import cross_val_score, learning_curve, train_test_split
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor, plot_tree
+from sklearn.metrics import (ConfusionMatrixDisplay, accuracy_score,
+                             classification_report, confusion_matrix,
+                             mean_squared_error, r2_score)
+from sklearn.model_selection import (cross_val_score, learning_curve,
+                                     train_test_split)
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.tree import (DecisionTreeClassifier, DecisionTreeRegressor,
+                          plot_tree)
 
 from .base import MLBase
-from .util import encode_base64, get_image_data_from_plot, map_list_json_compatible
+from .util import (encode_base64, get_image_data_from_plot,
+                   map_list_json_compatible)
 
 
 def get_plots_by_instance(ml):
@@ -93,15 +92,6 @@ class DecisionTreeClassification(MLBase):
         self._algo: Optional[DecisionTreeClassifier] = None
         super().__init__(dataset, column_features, column_target)
 
-    def set_column_features(self, column_features: Union[List[str], Tuple[str]]):
-        """
-        Set the feature columns for the classifier.
-
-        :param column_features: A list or tuple of feature column names.
-        """
-        self._features = list(column_features)
-        self.features = self.data[self._features]
-
     def configure_training(
         self,
         criterion: Literal["entropy", "gini"] = "gini",
@@ -146,7 +136,6 @@ class DecisionTreeClassification(MLBase):
             shuffle=shuffle,
             stratify=stratify,
         )
-        print("Criterion:", criterion)
         # Create the DecisionTreeClassifier model with the specified hyperparameters
         self._algo = DecisionTreeClassifier(
             criterion=criterion,
@@ -197,7 +186,12 @@ class DecisionTreeClassification(MLBase):
         conf_matrix = confusion_matrix(self.y_test, self.y_pred, labels=self._algo.classes_)
         feature_importance = self._algo.feature_importances_
         lc = learning_curve(self._algo, self.features, self.target, cv=5, scoring="accuracy", n_jobs=-1)
-        class_distribution = (self.data[self._target].value_counts(),)
+        class_distribution = dict(
+            map(
+                lambda x: [x[0][0] if type(x[0]) is list or type(x[0]) is tuple else str(x[0]), x[1]],
+                self.data[self._target].value_counts().to_dict().items(),
+            )
+        )
         return {
             "test_accuracy": accuracy,  # test accuracy
             "training_accuracy": train_accuracy,  # training accuracy
@@ -220,6 +214,8 @@ class DecisionTreeClassification(MLBase):
 
         def func():
             plot_tree(self._algo, filled=True, feature_names=self.features.columns, class_names=self._algo.classes_)
+            plt.title("Decision Tree")
+            plt.tight_layout()
 
         data = get_image_data_from_plot(func, figsize=(50, 25))
         return data
@@ -236,6 +232,8 @@ class DecisionTreeClassification(MLBase):
             cm = confusion_matrix(self.y_test, self.y_pred, labels=self._algo.classes_)
             disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=self._algo.classes_)
             disp.plot(cmap="viridis")
+            plt.title("Confusion Matrix")
+            plt.tight_layout()
 
         data = get_image_data_from_plot(func)
         return data
@@ -250,9 +248,13 @@ class DecisionTreeClassification(MLBase):
 
         def func():
             feature_importances = self._algo.feature_importances_
-            plt.bar(self.features.columns, feature_importances)
-            plt.xticks(rotation=45)
+            feature_names = self.features.columns
+            plt.bar(feature_names, feature_importances)
+            plt.xticks(rotation=45, ha="right")
             plt.title("Feature Importance")
+            plt.ylabel("Importance")
+            plt.xlabel("Feature")
+            plt.tight_layout()
 
         data = get_image_data_from_plot(func)
         return data
@@ -435,7 +437,13 @@ class DecisionTreeRegression(MLBase):
         """
 
         def func():
-            plot_tree(self._algo, filled=True, feature_names=self.features.columns)
+            plot_tree(
+                self._algo,
+                filled=True,
+                feature_names=self.features.columns,
+            )
+            plt.title("Regression Tree")
+            plt.tight_layout()
 
         return get_image_data_from_plot(func, figsize=(50, 25))
 
@@ -449,14 +457,20 @@ class DecisionTreeRegression(MLBase):
 
         def func():
             train_sizes, train_scores, test_scores = learning_curve(
-                self._algo, self.features, self.target, cv=5, scoring="neg_mean_squared_error", n_jobs=-1
+                self._algo,
+                self.features,
+                self.target,
+                cv=5,
+                scoring="neg_mean_squared_error",
+                n_jobs=-1,
             )
-            plt.plot(train_sizes, train_scores.mean(axis=1), label="Train MSE")
-            plt.plot(train_sizes, test_scores.mean(axis=1), label="Test MSE")
+            plt.plot(train_sizes, -train_scores.mean(axis=1), label="Train MSE")
+            plt.plot(train_sizes, -test_scores.mean(axis=1), label="Test MSE")
             plt.legend(loc="best")
             plt.xlabel("Training Set Size")
             plt.ylabel("Mean Squared Error")
             plt.title("Learning Curve")
+            plt.tight_layout()
 
         return get_image_data_from_plot(func)
 
@@ -470,8 +484,12 @@ class DecisionTreeRegression(MLBase):
 
         def func():
             feature_importances = self._algo.feature_importances_
-            plt.bar(self.features.columns, feature_importances)
-            plt.xticks(rotation=45)
+            feature_names = self.features.columns
+            plt.bar(feature_names, feature_importances)
+            plt.xticks(rotation=45, ha="right")
             plt.title("Feature Importance")
+            plt.ylabel("Importance")
+            plt.xlabel("Feature")
+            plt.tight_layout()
 
         return get_image_data_from_plot(func)

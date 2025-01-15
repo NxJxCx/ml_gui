@@ -343,6 +343,14 @@
         "documentation": {}
     },
     {
+        "label": "OneHotEncoder",
+        "importPath": "sklearn.preprocessing",
+        "description": "sklearn.preprocessing",
+        "isExtraImport": true,
+        "detail": "sklearn.preprocessing",
+        "documentation": {}
+    },
+    {
         "label": "DecisionTreeClassifier",
         "importPath": "sklearn.tree",
         "description": "sklearn.tree",
@@ -467,14 +475,6 @@
         "documentation": {}
     },
     {
-        "label": "generate_session_id",
-        "importPath": "machine_learning.util",
-        "description": "machine_learning.util",
-        "isExtraImport": true,
-        "detail": "machine_learning.util",
-        "documentation": {}
-    },
-    {
         "label": "get_all_algo_names",
         "importPath": "machine_learning.ml_util",
         "description": "machine_learning.ml_util",
@@ -520,6 +520,14 @@
         "description": "machine_learning.ml_util",
         "isExtraImport": true,
         "detail": "machine_learning.ml_util",
+        "documentation": {}
+    },
+    {
+        "label": "generate_session_id",
+        "importPath": "machine_learning.util",
+        "description": "machine_learning.util",
+        "isExtraImport": true,
+        "detail": "machine_learning.util",
         "documentation": {}
     },
     {
@@ -725,7 +733,7 @@
         "kind": 2,
         "importPath": "machine_learning.ml_util",
         "description": "machine_learning.ml_util",
-        "peekOfCode": "def get_trained_history_results(session_id: str) -> Dict[str, Any]:\n    global ml_instances\n    if session_id not in ml_instances.keys():\n        return {}\n    ml = ml_instances.get(session_id, None)\n    if not ml:\n        return {}\n    evaluated = ml.evaluate_trained_model()\n    indices = {i: k for i, k in enumerate(evaluated.keys())}\n    evaluation = map_list_json_compatible([evaluated[indices[i]] for i in indices.keys()])",
+        "peekOfCode": "def get_trained_history_results(session_id: str) -> Dict[str, Any]:\n    global ml_instances\n    if session_id not in ml_instances.keys():\n        return {}\n    ml = ml_instances.get(session_id, None)\n    if not ml:\n        return {}\n    evaluated = ml.evaluate_trained_model()\n    indices = {i: str(k) for i, k in enumerate(evaluated.keys())}\n    evaluation = map_list_json_compatible([evaluated[f\"{indices[i]}\"] for i in indices.keys()])",
         "detail": "machine_learning.ml_util",
         "documentation": {}
     },

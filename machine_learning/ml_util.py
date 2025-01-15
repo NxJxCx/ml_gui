@@ -107,8 +107,8 @@ def get_trained_history_results(session_id: str) -> Dict[str, Any]:
     if not ml:
         return {}
     evaluated = ml.evaluate_trained_model()
-    indices = {i: k for i, k in enumerate(evaluated.keys())}
-    evaluation = map_list_json_compatible([evaluated[indices[i]] for i in indices.keys()])
+    indices = {i: str(k) for i, k in enumerate(evaluated.keys())}
+    evaluation = map_list_json_compatible([evaluated[f"{indices[i]}"] for i in indices.keys()])
     evaluation = {f"{indices[i]}": evaluation[int(i)] for i in indices.keys()}
     plots = get_plots(session_id)
     algorithm = ml.algorithm
@@ -123,5 +123,6 @@ def get_trained_history_results(session_id: str) -> Dict[str, Any]:
         "dataset": dataset,
         "algorithm_name": algorithm_name,
         "features": ml._features,
+        "encoded_features": ml._encoded_features,
         "target": ml._target,
     }

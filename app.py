@@ -1,18 +1,15 @@
-import os
-import pandas as pd
 import json
+import os
+
+import pandas as pd
 from flask import Flask, jsonify, render_template, request, session
 from flask_cors import CORS
 
+from machine_learning.ml_util import (get_all_algo_names, get_ml_instance,
+                                      get_trained_history_results,
+                                      remove_ml_instance, set_ml_instance,
+                                      set_session_id)
 from machine_learning.util import generate_session_id
-from machine_learning.ml_util import (
-    get_all_algo_names,
-    get_ml_instance,
-    get_trained_history_results,
-    remove_ml_instance,
-    set_ml_instance,
-    set_session_id,
-)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY") if "SECRET_KEY" in os.environ.keys() else generate_session_id()
@@ -75,7 +72,6 @@ def ai_train():
         hyperparameters = json.loads(hyperparameters)
         hyperparameters = {k: val for k, val in hyperparameters.items() if val is not None}
         ml.configure_training(**hyperparameters)
-        ml.train_model()  # train the model
         trained = ml.train_model()
         if not trained:
             remove_ml_instance(session_id)
@@ -110,6 +106,8 @@ def ai_predict():
         dinput: dict = data.get("input", {})
         dinput = {y: z for y, z in map(lambda x: [x[0], [x[1]]], dinput.items())}
         result = ml.predict(dinput)
+        print("result:")
+        print(result)
         return jsonify(result=[*result.tolist()])
     except Exception as e:
         return jsonify(error=f"{e}")
