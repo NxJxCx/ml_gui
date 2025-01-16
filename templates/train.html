@@ -58,10 +58,6 @@
                             <input type="number" class="form-control" id="test-size" name="test_size" value="0.25" step="0.01" min="0" max="1" placeholder="Enter test size (0 to 1)">
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="train-size" class="form-label">Train Size</label>
-                            <input type="number" class="form-control" id="train-size" name="train_size" value="" placeholder="Enter train size (optional)">
-                        </div>
-                        <div class="col-md-4 mb-3">
                             <label for="max-depth" class="form-label">Max Depth</label>
                             <input type="number" class="form-control" id="max-depth" name="max_depth" value="" placeholder="Enter max depth (optional)">
                         </div>
@@ -99,10 +95,6 @@
                                 <option value="false">False</option>
                             </select>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <label for="stratify" class="form-label">Stratify</label>
-                            <input type="text" class="form-control" id="stratify" name="stratify" value="" placeholder="Enter stratify (optional)">
-                        </div>
                         {% elif algorithm == 'dtregressor' %}
                         <div class="col-md-4 mb-3">
                             <label for="random-state" class="form-label">Random State</label>
@@ -111,10 +103,6 @@
                         <div class="col-md-4 mb-3">
                             <label for="test-size" class="form-label">Test Size</label>
                             <input type="number" class="form-control" id="test-size" name="test_size" value="0.25" step="0.01" min="0" max="1" placeholder="Enter test size (0 to 1)">
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label for="train-size" class="form-label">Train Size</label>
-                            <input type="number" class="form-control" id="train-size" name="train_size" value="" placeholder="Enter train size (optional)">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="max-depth" class="form-label">Max Depth</label>
